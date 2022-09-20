@@ -118,17 +118,6 @@ var AuthRequest = func(req *http.Request) (any, sensitive bool) {
 }
 
 func init() {
-	_, pat := http.DefaultServeMux.Handler(&http.Request{URL: &url.URL{Path: debugRequestsPath}})
-	if pat == debugRequestsPath {
-		panic("/debug/requests is already registered. You may have two independent copies of " +
-			"golang.org/x/net/trace in your binary, trying to maintain separate state. This may " +
-			"involve a vendored copy of golang.org/x/net/trace.")
-	}
-
-	// TODO(jbd): Serve Traces from /debug/traces in the future?
-	// There is no requirement for a request to be present to have traces.
-	http.HandleFunc(debugRequestsPath, Traces)
-	http.HandleFunc(debugEventsPath, Events)
 }
 
 // NewContext returns a copy of the parent context
